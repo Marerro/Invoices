@@ -8,4 +8,4 @@ Your users should be able to:
 6. See hover states for all interactive elements on the page.
 7. Build this project as a full-stack application.
 
-![Image](https://github.com/user-attachments/assets/54883572-ed9a-46f4-889b-cb57c15ccb33)
+![Image](https://github.com/user-attachments/assets/a621398a-5df7-4437-b1fe-286b3f3ef851)
