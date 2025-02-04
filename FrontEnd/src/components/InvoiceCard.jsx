@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import { allInvoices } from "../helpers/get";
-import Modal from "../utils/Modal";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import InvoiceEdit from "./InvoiceEdit";
+import {deleteInvoice} from "../helpers/delete"
+import { MdDeleteOutline } from "react-icons/md";
 const InvoiceCard = () => {
-  const [invoices, setInvoices] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-
+  const [invoices, setInvoices] = useState([]); // To store the invoices
+  const [isOpen, setIsOpen] = useState(false); // To control the modal
+  const [selectedInvoice, setSelectedInvoice] = useState(null); // To store the selected invoice
+  const [deleteSelected, setDeleteSelected] = useState(null);
   const getInvoices = async () => {
     try {
       const response = await allInvoices();
       setInvoices(response.data);
-      console.log(invoices);
     } catch (error) {
       console.log(error);
     }
@@ -21,13 +22,25 @@ const InvoiceCard = () => {
     getInvoices();
   }, []);
 
-  const handleOpen = () => {
+  const invoiceDelete = async (id) => {
+    try {
+      const response = await deleteInvoice(id);
+      setDeleteSelected(response);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleOpen = (invoice) => {
     setIsOpen(true);
+    setSelectedInvoice(invoice); // Set the selected invoice
   };
 
   // close modal
   const handleClose = () => {
     setIsOpen(false);
+    setSelectedInvoice(null);
   };
 
   const renderInvoice = (invoices) => {
@@ -36,62 +49,60 @@ const InvoiceCard = () => {
 
       const data = date.slice(0, 10);
 
-      console.log(invoice);
-
       return (
         <div
           key={id}
-          className="invoice-card flex w-2/4 mx-auto text-white items-center justify-center gap-5 p-3"
+          className="invoice-card flex w-3/4 mx-auto text-white items-center justify-center p-3"
         >
-          <div className="flex gap-20 bg-sky-950 items-center w-2/3 justify-center rounded-[7px] h-[90px]">
+          <div className="grid grid-cols-6  justify-items-center bg-gradient-to-r from-[#1B3444] to-[#244C66] shadow-md items-center w-2/3 justify-center rounded-[7px] h-[50px]">
             <h1>
-              #<span className="">{id}</span>
+              #<span className="fira">{id}</span>
             </h1>
-            <h3 className="text-gray-300"> Due {data}</h3>
-            <h3 className="text-gray-300">{name}</h3>
-            <h1 className="text-[25px]">${price}</h1>
-            <div className="flex items-center">
-              <h1
-                style={
-                  status === "Draft"
-                    ? {
-                        height: "13px",
-                        width: "13px",
-                        backgroundColor: "#ffffff",
-                        borderRadius: "50%",
-                        marginRight: "15px",
-                      }
-                    : status === "Pending"
-                    ? {
-                        height: "13px",
-                        width: "13px",
-                        backgroundColor: "#ff6505",
-                        borderRadius: "50%",
-                        marginRight: "15px",
-                      }
-                    : status === "Paid"
-                    ? {
-                        height: "13px",
-                        width: "13px",
-                        backgroundColor: "#0cc935",
-                        borderRadius: "50%",
-                        marginRight: "15px",
-                      }
-                    : {}
-                }
-              ></h1>
-              <h3 className="flex items-center">{status}</h3>
-
-              {/* Button */ }
-              <div>
-                <button onClick={handleOpen} type="button" className="flex">
-                  <span className="ml-10">
-                    <IoIosArrowDroprightCircle />
-                  </span>
-                </button>
-                <Modal isOpen={isOpen} onClose={handleClose} children={<InvoiceEdit />} />
-              </div>
-
+            <h3 className="text-gray-300 fira text-[14px]"> Due {data}</h3>
+            <h3 className="text-gray-300 fira">{name}</h3>
+            <h1 className="text-[25px] fira">${price}</h1>
+            <div
+              className={`flex items-center rounded-md px-3 py-1.5 ${
+                status === "Draft"
+                  ? "bg-gray-700 text-white"
+                  : status === "Pending"
+                  ? "bg-[#ff9500] text-orange-200"
+                  : status === "Paid"
+                  ? "bg-green-700 text-green-300"
+                  : "bg-gray-500 text-gray-300"
+              }`}
+            >
+              <span
+                className="h-2 w-2 rounded-full mr-2"
+                style={{
+                  backgroundColor:
+                    status === "Draft"
+                      ? "#ffffff"
+                      : status === "Pending"
+                      ? "#ff6505"
+                      : status === "Paid"
+                      ? "#0cc935"
+                      : "#ffffff",
+                }}
+              ></span>
+              <span className="text-sm inconsolata">{status}</span>
+            </div>
+            {/* Button to open edit modal */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => handleOpen(invoice)}
+                type="button"
+                className="flex items-center"
+              >
+                <span className="ml-2">
+                  <IoIosArrowDroprightCircle />
+                </span>
+              </button>
+              <button
+              onClick={() => invoiceDelete(id)}
+              type="button"
+              className="flex items-center"
+              ><span></span><MdDeleteOutline /></button>
             </div>
           </div>
         </div>
@@ -99,7 +110,20 @@ const InvoiceCard = () => {
     });
   };
 
-  return <>{renderInvoice(invoices)}</>;
+  return (
+    <div>
+      {renderInvoice(invoices)}
+
+      {/* Send props to InvoiceEdit component */}
+      {isOpen && selectedInvoice && (
+        <InvoiceEdit
+          invoice={selectedInvoice}
+          isOpen={isOpen}
+          handleClose={handleClose}
+        />
+      )}
+    </div>
+  );
 };
 
 export default InvoiceCard;

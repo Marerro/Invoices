@@ -26,7 +26,7 @@ const Modal = ({ isOpen, onClose, children }) => {
                     background: "linear-gradient(120deg, #330033, #440044, #550055)",
                     textAlign: "center",
                     opacity: 0.8,
-                    height: 300,
+                    height: 350,
                     width: 700,
                     margin: "auto",
                     padding: "2%",

@@ -1,4 +1,4 @@
-const {postUser, getInvoicesCount, getAllInvoices, EditUser} = require('../Model/userModel');
+const {postUser, getInvoicesCount, getAllInvoices, EditUser, deleteUser} = require('../Model/userModel');
 
 class userController {
     async postUser(req, res, next) {
@@ -72,6 +72,21 @@ class userController {
 
             })
 
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async invoiceDelete(req, res, next) {
+        try {
+            const id = req.params.id;
+
+            const deletedInvoice = await deleteUser(id)
+
+            res.status(200).json({
+                status: "success",
+                deletedInvoice: deletedInvoice
+            })
         } catch (error) {
             next(error)
         }

@@ -20,7 +20,6 @@ const InvoiceHeader = () => {
 
         setInvoices(count);
 
-        console.log(count);
       } catch (error) {
         console.log("API request failed", error.message);
       }
@@ -28,6 +27,7 @@ const InvoiceHeader = () => {
 
     fetchInvoices();
   }, []);
+
 
   // open modal
   const handleOpen = () => {

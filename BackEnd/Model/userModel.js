@@ -41,3 +41,13 @@ exports.EditUser = async (updInvoice, id) => {
 
     return editInvoice[0];
 }
+
+exports.deleteUser = async (id) => {
+    const deletedInvoice = await sql`
+    DELETE
+    FROM users
+    WHERE id = ${id}
+    `
+
+    return deletedInvoice[0];
+}
