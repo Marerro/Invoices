@@ -1,9 +1,12 @@
 const {sql} = require('../dbConnection');
 
 exports.postUser = async (user) => {
+        const currentDate = new Date()
+        const formatedDate = currentDate.toISOString().split('T')[0]
+        console.log(formatedDate);
         const users = await sql`
-        INSERT INTO users (name, price)
-        VALUES(${user.name}, ${user.price})
+        INSERT INTO users (name, price, status, date)
+        VALUES(${user.name}, ${user.price}, ${user.status || "draft"}, ${formatedDate})
         RETURNING *
         `;
         return users[0];
@@ -26,4 +29,15 @@ exports.getAllInvoices = async () => {
     `;
 
     return invoices;
+}
+
+exports.EditUser = async (updInvoice, id) => {
+    const editInvoice = await sql`
+    UPDATE users
+    SET name = ${updInvoice.name}, price = ${updInvoice.price}, status = ${updInvoice.status}
+    WHERE id = ${id}
+    RETURNING *;
+    `
+
+    return editInvoice[0];
 }

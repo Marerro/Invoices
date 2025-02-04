@@ -54,7 +54,7 @@ const InvoiceHeader = () => {
   return (
     <>
       {/* Invoice Header */}
-      <div className="header w-1/2 m-auto mt-10 flex">
+      <div className="header w-1/2 m-auto mt-10 flex pb-10">
         <div>
           <h1 className="text-white inconsolata text-[40px]">Invoices</h1>
           <p className="text-white fira">There are {invoices} total invoices</p>

@@ -25,4 +25,17 @@
   .fira {
     font-family: "Fira Code", monospace;
   }
+
+  /* .dot {
+    height:13px;
+    width:13px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin-right: 10px;
+  } */
+
+  .dot-orange {
+    background-color: #ff9900;
+  }
+
 }
