@@ -3,14 +3,15 @@ import { useState, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { CiCirclePlus } from "react-icons/ci";
 import Modal from "../utils/Modal";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 import { postInvoice } from "../helpers/post";
 
-const InvoiceHeader = () => {
+const InvoiceHeader = ({ handleStatus }) => {
   const [invoices, setInvoices] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const {register, handleSubmit} = useForm()
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -19,7 +20,6 @@ const InvoiceHeader = () => {
         const { count } = response.allInvoices[0];
 
         setInvoices(count);
-
       } catch (error) {
         console.log("API request failed", error.message);
       }
@@ -27,7 +27,6 @@ const InvoiceHeader = () => {
 
     fetchInvoices();
   }, []);
-
 
   // open modal
   const handleOpen = () => {
@@ -42,14 +41,14 @@ const InvoiceHeader = () => {
   const onSubmit = async (data) => {
     try {
       const newInvoice = await postInvoice(data);
-      
-      if(newInvoice){
+
+      if (newInvoice) {
         setMessage("Invoice created successfully");
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -63,7 +62,26 @@ const InvoiceHeader = () => {
         {/* Filter by status */}
         <div className="ml-auto flex items-center">
           <h4 className="text-white">Filter by status </h4>
-          <MdArrowDropDown className="w-[25px] h-[25px] text-[#7E88C3]" />
+
+          {/* Button for dropdown */}
+          <button
+            onClick={() => setIsDropDownOpen(!isDropDownOpen)}
+            type="button"
+            id="dropdown"
+            className=""
+          >
+            <MdArrowDropDown className="w-[25px] h-[25px] text-[#7E88C3]" />
+          </button>
+
+          <div
+            id="myDropdown"
+            className={`dropdown-content ${isDropDownOpen ? "show" : ""}`}
+          >
+            <button onClick={() => handleStatus("All")}>All</button>
+            <button onClick={() => handleStatus("Draft")}>Draft</button>
+            <button onClick={() => handleStatus("Pending")}>Pending</button>
+            <button onClick={() => handleStatus("Paid")}>Paid</button>
+          </div>
         </div>
 
         {/*Button */}
@@ -82,53 +100,55 @@ const InvoiceHeader = () => {
             className="border-2 bg-red-700 w-[150px] h-[100px]"
           >
             <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
-                <h1 className="text-white fira">Add Invoice</h1>
-              </div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                  <h1 className="text-white fira">Add Invoice</h1>
+                </div>
 
-              {/* Name */}
-              <div className="p-2">
-                <label
-                  htmlFor="name"
-                  className="block mb-2 inconsolata text-[15px] font-[500] text-white"
-                >
-                  Full name
-                </label>
-                <input
-                {...register("name")}
-                  type="text"
-                  id="name"
-                  className="block m-auto p-4 border w-[220px] h-[25px] text-red-800 border-gray-300 rounded-lg text-center"
-                ></input>
-              </div>
+                {/* Name */}
+                <div className="p-2">
+                  <label
+                    htmlFor="name"
+                    className="block mb-2 inconsolata text-[15px] font-[500] text-white"
+                  >
+                    Full name
+                  </label>
+                  <input
+                    {...register("name")}
+                    type="text"
+                    id="name"
+                    className="block m-auto p-4 border w-[220px] h-[25px] text-red-800 border-gray-300 rounded-lg text-center"
+                  ></input>
+                </div>
 
-              {/* Price */}
-              <div className="">
-                <label
-                  htmlFor="price"
-                  className="block mb-2 inconsolata text-[15px] font-[500] text-white"
-                >
-                  Price
-                </label>
-                <input
-                {...register("price")}
-                  type="text"
-                  id="price"
-                  className="block m-auto p-4 border w-[220px] h-[25px] text-red-800 border-gray-300 rounded-lg text-center"
-                ></input>
-              </div>
+                {/* Price */}
+                <div className="">
+                  <label
+                    htmlFor="price"
+                    className="block mb-2 inconsolata text-[15px] font-[500] text-white"
+                  >
+                    Price
+                  </label>
+                  <input
+                    {...register("price")}
+                    type="text"
+                    id="price"
+                    className="block m-auto p-4 border w-[220px] h-[25px] text-red-800 border-gray-300 rounded-lg text-center"
+                  ></input>
+                </div>
 
-              {/* Submit Button */}
-              <div className="p-7">
-                <button
-                  type="submit"
-                  className="w-[220px] h-[35px] text-gray-900 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-[#F7BE38]/90 focus:ring-1 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm text-center dark:focus:ring-[#F7BE38]/50"
-                >
-                  Add Invoice
-                </button>
-                {message && <p className=" p-1.5 text-green-500">{message}</p>}
-              </div>
+                {/* Submit Button */}
+                <div className="p-7">
+                  <button
+                    type="submit"
+                    className="w-[220px] h-[35px] text-gray-900 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-[#F7BE38]/90 focus:ring-1 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm text-center dark:focus:ring-[#F7BE38]/50"
+                  >
+                    Add Invoice
+                  </button>
+                  {message && (
+                    <p className=" p-1.5 text-green-500">{message}</p>
+                  )}
+                </div>
               </form>
             </>
           </Modal>

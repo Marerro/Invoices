@@ -4,19 +4,23 @@ import { IoIosArrowDroprightCircle } from "react-icons/io";
 import InvoiceEdit from "./InvoiceEdit";
 import {deleteInvoice} from "../helpers/delete"
 import { MdDeleteOutline } from "react-icons/md";
-const InvoiceCard = () => {
+const InvoiceCard = ({selectedDropDown}) => {
   const [invoices, setInvoices] = useState([]); // To store the invoices
   const [isOpen, setIsOpen] = useState(false); // To control the modal
   const [selectedInvoice, setSelectedInvoice] = useState(null); // To store the selected invoice
   const [deleteSelected, setDeleteSelected] = useState(null);
+  const [filteredInvoices, setFilteredInvoices] = useState([]);
+
   const getInvoices = async () => {
     try {
       const response = await allInvoices();
       setInvoices(response.data);
+      setFilteredInvoices(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     getInvoices();
@@ -42,6 +46,14 @@ const InvoiceCard = () => {
     setIsOpen(false);
     setSelectedInvoice(null);
   };
+
+  useEffect(() => {
+    const updatedInvoices = invoices.filter((invoice) => {
+      if (selectedDropDown === "All") return true;
+      return invoice.status === selectedDropDown;
+    });
+    setFilteredInvoices(updatedInvoices);
+  }, [selectedDropDown, invoices]);
 
   const renderInvoice = (invoices) => {
     return invoices.map((invoice) => {
@@ -112,7 +124,10 @@ const InvoiceCard = () => {
 
   return (
     <div>
-      {renderInvoice(invoices)}
+      {selectedDropDown ? (
+        renderInvoice(filteredInvoices)
+      ) :
+        renderInvoice(invoices)}
 
       {/* Send props to InvoiceEdit component */}
       {isOpen && selectedInvoice && (
