@@ -53,7 +53,7 @@ const InvoiceHeader = ({ handleStatus }) => {
   return (
     <>
       {/* Invoice Header */}
-      <div className="header w-1/2 m-auto mt-10 flex pb-10">
+      <div className="header w-1/2 m-auto mt-3 flex pb-[60px]">
         <div>
           <h1 className="text-white inconsolata text-[40px]">Invoices</h1>
           <p className="text-white fira">There are {invoices} total invoices</p>
@@ -77,10 +77,10 @@ const InvoiceHeader = ({ handleStatus }) => {
             id="myDropdown"
             className={`dropdown-content ${isDropDownOpen ? "show" : ""}`}
           >
-            <button onClick={() => handleStatus("All")}>All</button>
-            <button onClick={() => handleStatus("Draft")}>Draft</button>
-            <button onClick={() => handleStatus("Pending")}>Pending</button>
-            <button onClick={() => handleStatus("Paid")}>Paid</button>
+            <button onClick={() => handleStatus("All")} className="text-white">All</button>
+            <button onClick={() => handleStatus("Draft")} className="text-white">Draft</button>
+            <button onClick={() => handleStatus("Pending")} className="text-white">Pending</button>
+            <button onClick={() => handleStatus("Paid")} className="text-white">Paid</button>
           </div>
         </div>
 

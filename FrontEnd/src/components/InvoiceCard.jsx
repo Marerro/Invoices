@@ -64,15 +64,15 @@ const InvoiceCard = ({selectedDropDown}) => {
       return (
         <div
           key={id}
-          className="invoice-card flex w-3/4 mx-auto text-white items-center justify-center p-3"
+          className="invoice-card flex w-3/4 mx-auto text-white items-center justify-center pt-5 "
         >
-          <div className="grid grid-cols-6  justify-items-center bg-gradient-to-r from-[#1B3444] to-[#244C66] shadow-md items-center w-2/3 justify-center rounded-[7px] h-[50px]">
+          <div className="grid grid-cols-6 justify-items-center bg-gradient-to-r from-[#1B3444] to-[#244C66] shadow-md items-center w-2/3 justify-center rounded-[7px] h-[50px]">
             <h1>
               #<span className="fira">{id}</span>
             </h1>
             <h3 className="text-gray-300 fira text-[14px]"> Due {data}</h3>
             <h3 className="text-gray-300 fira">{name}</h3>
-            <h1 className="text-[25px] fira">${price}</h1>
+            <h1 className="text-[25px]">${price}</h1>
             <div
               className={`flex items-center rounded-md px-3 py-1.5 ${
                 status === "Draft"
