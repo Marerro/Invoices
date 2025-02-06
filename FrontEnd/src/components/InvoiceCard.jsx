@@ -64,7 +64,7 @@ const InvoiceCard = ({selectedDropDown}) => {
       return (
         <div
           key={id}
-          className="invoice-card flex w-3/4 mx-auto text-white items-center justify-center pt-5 "
+          className="invoice-card flex w-[100vw] mx-auto text-white items-center justify-center pt-5 "
         >
           <div className="grid grid-cols-6 justify-items-center bg-[#1E2139] shadow-md items-center w-2/4 justify-center rounded-[7px] h-[70px]">
             <h1>
