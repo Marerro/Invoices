@@ -23,7 +23,7 @@ const Modal = ({ isOpen, onClose, children }) => {
                     e.stopPropagation();
                 }}    
                 style={{
-                    background: "linear-gradient(120deg, #330033, #440044, #550055)",
+                    background: "#1E2139",
                     textAlign: "center",
                     opacity: 0.8,
                     height: 350,
