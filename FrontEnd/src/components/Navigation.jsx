@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import { AiFillGitlab } from "react-icons/ai";
 import {useContext} from "react";
 import ThemeContext from "../contexts/ThemeContext";
+import { FaHome } from "react-icons/fa";
 
 function Navigation() {
   const {myTheme, setMyTheme} = useContext(ThemeContext);
@@ -22,7 +23,12 @@ function Navigation() {
          <AiFillGitlab className="w-[100px] h-[80px]  bg-purple-800 rounded-r-[13px] border-[1px] border-purple-600 radius-[15px]" />
          </div>
         <div className="flex flex-col justify-end items-center">
-          <Link to="/login">
+        <Link to="/">
+          <button className="flex justify-center">
+          <FaHome className="text-white text-[23px] absolute bottom-[200px]" />
+          </button>
+          </Link>
+          <Link to="/register">
             <button className="flex justify-center">
               <FaUser className="text-white text-[20px] absolute bottom-[150px]" />
             </button>
