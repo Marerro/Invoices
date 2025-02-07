@@ -7,3 +7,12 @@ exports.userRegister = async (user) => {
     `
     return users[0];
 }
+
+exports.getUserByEmail = async (email) => {
+    const user = await sql`
+    SELECT userdetails.*
+    FROM userdetails
+    WHERE userdetails.email = ${email};
+    `;
+    return user[0];
+}

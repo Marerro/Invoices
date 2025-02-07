@@ -1,6 +1,7 @@
-const {userRegister} = require('../Model/authModel');
+const {userRegister, getUserByEmail} = require('../Model/authModel');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const AppError = require('../utilities/appError');
 
 class authController {
 
@@ -30,6 +31,8 @@ class authController {
 
             const user = await userRegister(userDetails);
 
+            console.log(user)
+
             // after signup instant login
 
             const token = this.signToken(user.id);
@@ -43,6 +46,27 @@ class authController {
                 user: userDetails,
             })
 
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    login = async (req, res, next) => {
+        try {
+            const {email} = req.body;
+
+            const user = await getUserByEmail(email)
+
+            const token = this.signToken(user.id);
+
+            this.sendCookie(token, res);
+
+            user.password = undefined;
+
+            res.status(200).json({
+                status: "success",
+                data: user
+            })
         } catch (error) {
             next(error);
         }
