@@ -17,8 +17,8 @@ export const postUser = async (data) => {
     return response.data;
 }
 
-export const loginAPI = async () => {
-    const response = await axios.post(getUserURL)
+export const loginAPI = async (data) => {
+    const response = await axios.post(getUserURL, data, { withCredentials: true });
 
     console.log(response);
 

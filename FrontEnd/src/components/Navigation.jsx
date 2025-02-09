@@ -7,14 +7,17 @@ import { AiFillGitlab } from "react-icons/ai";
 import {useContext} from "react";
 import ThemeContext from "../contexts/ThemeContext";
 import { FaHome } from "react-icons/fa";
+import { UserContext } from "../contexts/UserContext";
 
 function Navigation() {
+  const { user } = useContext(UserContext); 
   const {myTheme, setMyTheme} = useContext(ThemeContext);
 
   const handleThemeChange = () => {
     setMyTheme(myTheme === "dark" ? "light" : "dark");
     localStorage.setItem('myTheme', myTheme === "dark" ? "light" : "dark");
   }
+
 
   return (
     <>
@@ -40,7 +43,7 @@ function Navigation() {
 
           <p className="border-[1px] border-gray-500 w-full absolute bottom-[70px]"></p>
           <p className="text-white flex justify-center absolute bottom-[20px]">
-            Avatar
+          {user ? <p>{user.name}</p> : <p>Please log in</p>}
           </p>
         </div>
       </div>

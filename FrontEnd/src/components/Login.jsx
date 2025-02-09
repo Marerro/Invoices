@@ -1,19 +1,36 @@
 import { useState, useEffect } from "react";
 import { loginAPI } from "../helpers/post";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 function Login() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { setUser } = useContext(UserContext)
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const onSubmit = async (data) => {
     try {
-        {/* CHECK API */}
       const response = await loginAPI(data);
-      console.log(response);
-      return response.data;
+      setUser(response.data.data);
+      setError(null); 
+      navigate("/");
     } catch (error) {
-      console.log(error);
-    }
+      if (axios.isAxiosError(error)) {
+        if(error.response) {
+          setError(error.response.data.message || "An error occurred");
+        } else if (error.request) {
+          setError("No response from server. Check internet connection");
+        } else {
+          setError("Something went wrong, please try again");
+        }
+      }else {
+        setError("An uxepected error occurred, please try again");
+      }
+      }
   };
 
 
@@ -42,6 +59,7 @@ function Login() {
           placeholder="Email"
           className="block m-auto p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
         />
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
         {/* Password */}
         <label
@@ -56,6 +74,7 @@ function Login() {
           placeholder="Password"
           className="block m-auto p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
         />
+        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 
         {/* Submit Button */}
         <div className="flex justify-center pt-8 pb-5">
@@ -65,6 +84,9 @@ function Login() {
           >
             Login
           </button>
+        </div>
+
+        <div>
         </div>
         </div>
       </form>

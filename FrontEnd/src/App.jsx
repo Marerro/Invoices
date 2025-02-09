@@ -9,6 +9,11 @@ import Register from "./components/Register"
 
 function App() {
     const [selectedDropDown, setSelectedDropDown] = useState("All");
+    const [newAddedInvoice, setNewAddedInvoice] = useState([]);
+
+    const handleNewInvoice = (newInvoice) => {
+      setNewAddedInvoice([...newAddedInvoice, newInvoice]); 
+    }
 
   return (
     <>
@@ -21,8 +26,8 @@ function App() {
           path="/"
           element={
             <>
-              <InvoiceHeader handleStatus={setSelectedDropDown} />
-              <InvoiceCard selectedDropDown={selectedDropDown} />
+              <InvoiceHeader handleStatus={setSelectedDropDown} onNewInvoice={handleNewInvoice} />
+              <InvoiceCard selectedDropDown={selectedDropDown} newAddedInvoice={newAddedInvoice}/>
             </>
           }
         />
