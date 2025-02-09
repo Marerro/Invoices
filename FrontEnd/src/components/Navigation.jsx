@@ -8,6 +8,7 @@ import {useContext} from "react";
 import ThemeContext from "../contexts/ThemeContext";
 import { FaHome } from "react-icons/fa";
 import { UserContext } from "../contexts/UserContext";
+import avatar from "../../images/avatar.svg";
 
 function Navigation() {
   const { user } = useContext(UserContext); 
@@ -43,7 +44,7 @@ function Navigation() {
 
           <p className="border-[1px] border-gray-500 w-full absolute bottom-[70px]"></p>
           <p className="text-white flex justify-center absolute bottom-[20px]">
-          {user ? <p>{user.name}</p> : <p>Please log in</p>}
+          {user ? <img className="w-[35px] h-[35px] flex justify-center items-center" src={avatar} alt="" /> : <p>Please log in</p>}
           </p>
         </div>
       </div>

@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import { Route, Routes } from "react-router";
 import ThemeContextProvider from "./contexts/ThemeContextProvider";
 import Register from "./components/Register"
+import Profile from "./components/Profile";
 
 function App() {
     const [selectedDropDown, setSelectedDropDown] = useState("All");
@@ -22,6 +23,7 @@ function App() {
     <Routes>
     <Route path={"/register"} element={<Register />} />
     <Route path={"/login"} element={<Login />} />
+    <Route path={"/profile"} element={<Profile />} />
     <Route
           path="/"
           element={
