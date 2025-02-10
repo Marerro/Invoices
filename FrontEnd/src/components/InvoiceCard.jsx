@@ -2,14 +2,18 @@ import { useState, useEffect } from "react";
 import { allInvoices } from "../helpers/get";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import InvoiceEdit from "./InvoiceEdit";
-import {deleteInvoice} from "../helpers/delete"
+import { deleteInvoice } from "../helpers/delete";
 import { MdDeleteOutline } from "react-icons/md";
-const InvoiceCard = ({selectedDropDown}) => {
+import { UserContext } from "../contexts/UserContext";
+import { useContext } from "react";
+
+const InvoiceCard = ({ selectedDropDown }) => {
   const [invoices, setInvoices] = useState([]); // To store the invoices
   const [isOpen, setIsOpen] = useState(false); // To control the modal
   const [selectedInvoice, setSelectedInvoice] = useState(null); // To store the selected invoice
   const [deleteSelected, setDeleteSelected] = useState(null);
   const [filteredInvoices, setFilteredInvoices] = useState([]);
+  const { user, loading } = useContext(UserContext);
 
   const getInvoices = async () => {
     try {
@@ -20,7 +24,6 @@ const InvoiceCard = ({selectedDropDown}) => {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     getInvoices();
@@ -34,7 +37,7 @@ const InvoiceCard = ({selectedDropDown}) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const handleOpen = (invoice) => {
     setIsOpen(true);
@@ -54,6 +57,10 @@ const InvoiceCard = ({selectedDropDown}) => {
     });
     setFilteredInvoices(updatedInvoices);
   }, [selectedDropDown, invoices]);
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   const renderInvoice = (invoices) => {
     return invoices.map((invoice) => {
@@ -100,22 +107,28 @@ const InvoiceCard = ({selectedDropDown}) => {
               <span className="text-sm inconsolata">{status}</span>
             </div>
             {/* Button to open edit modal */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => handleOpen(invoice)}
-                type="button"
-                className="flex items-center"
-              >
-                <span className="ml-2">
-                  <IoIosArrowDroprightCircle />
-                </span>
-              </button>
-              <button
-              onClick={() => invoiceDelete(id)}
-              type="button"
-              className="flex items-center"
-              ><span></span><MdDeleteOutline /></button>
-            </div>
+
+            {user && user.roles === "admin" && (
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => handleOpen(invoice)}
+                  type="button"
+                  className="flex items-center"
+                >
+                  <span className="ml-2">
+                    <IoIosArrowDroprightCircle />
+                  </span>
+                </button>
+                <button
+                  onClick={() => invoiceDelete(id)}
+                  type="button"
+                  className="flex items-center"
+                >
+                  <span></span>
+                  <MdDeleteOutline />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       );
@@ -124,10 +137,9 @@ const InvoiceCard = ({selectedDropDown}) => {
 
   return (
     <div>
-      {selectedDropDown ? (
-        renderInvoice(filteredInvoices)
-      ) :
-        renderInvoice(invoices)}
+      {selectedDropDown
+        ? renderInvoice(filteredInvoices)
+        : renderInvoice(invoices)}
 
       {/* Send props to InvoiceEdit component */}
       {isOpen && selectedInvoice && (

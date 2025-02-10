@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { CiCirclePlus } from "react-icons/ci";
 import NewInvoiceModal from "./newInvoiceModal";
+import  {UserContext}  from "../contexts/UserContext";
+import { useContext } from "react"; 
 
 const InvoiceHeader = ({ handleStatus, onNewInvoice }) => {
   const [invoices, setInvoices] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const { user, loading } = useContext(UserContext); 
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -24,6 +27,12 @@ const InvoiceHeader = ({ handleStatus, onNewInvoice }) => {
 
     fetchInvoices();
   }, []);
+
+  if(loading) {
+    return <h1>Loading...</h1>;
+}
+
+console.log(user);
 
   // open modal
   const handleOpen = () => {
@@ -83,17 +92,23 @@ const InvoiceHeader = ({ handleStatus, onNewInvoice }) => {
         </div>
 
         {/*Button */}
-        <div className="flex items-center">
-          <button
-            type="button"
-            onClick={handleOpen}
-            className="text-white flex items-center gap-2 bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-1 focus:ring-purple-300 font-medium rounded-full text-sm px-3 p-1 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-          >
-            <CiCirclePlus className="w-[25px] h-[25px]" /> New Invoice
-          </button>
-        </div>
-        
-      <NewInvoiceModal isOpen={isOpen} handleClose={() => setIsOpen(false)} onNewInvoice={onNewInvoice} />
+        {user && user.roles === "admin" && (
+          <div className="flex items-center">
+            <button
+              type="button"
+              onClick={handleOpen}
+              className="text-white flex items-center gap-2 bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-1 focus:ring-purple-300 font-medium rounded-full text-sm px-3 p-1 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+            >
+              <CiCirclePlus className="w-[25px] h-[25px]" /> New Invoice
+            </button>
+          </div>
+        )}
+
+        <NewInvoiceModal
+          isOpen={isOpen}
+          handleClose={() => setIsOpen(false)}
+          onNewInvoice={onNewInvoice}
+        />
       </div>
     </>
   );

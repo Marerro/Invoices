@@ -36,7 +36,12 @@ class authController {
 
       const user = await userRegister(userDetails);
 
-      console.log(user);
+      const postUser = {
+        name: user.name,
+        email: user.email,
+        id: user.id,
+        roles: user.roles || "user",
+      }
 
       // after signup instant login
 
@@ -48,7 +53,7 @@ class authController {
 
       res.status(200).json({
         status: "success",
-        user: userDetails,
+        user: postUser,
       });
     } catch (error) {
       next(error);
