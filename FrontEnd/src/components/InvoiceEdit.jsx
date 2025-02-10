@@ -40,7 +40,7 @@ const InvoiceEdit = ({ invoice, isOpen, handleClose, onClose}) => {
             {...register("name")}
             type="text"
             id="name"
-            className="block m-auto p-4 border w-[220px] h-[25px] text-red-800 border-gray-300 rounded-lg text-center"
+            className="block m-auto p-4 border w-[220px] h-[25px] text-black border-gray-300 rounded-lg text-center"
           />
         </div>
 
@@ -57,7 +57,7 @@ const InvoiceEdit = ({ invoice, isOpen, handleClose, onClose}) => {
             {...register("price")}
             type="text"
             id="price"
-            className="block m-auto p-4 border w-[220px] h-[25px] text-red-800 border-gray-300 rounded-lg text-center"
+            className="block m-auto p-4 border w-[220px] h-[25px] text-black border-gray-300 rounded-lg text-center"
           />
         </div>
 
@@ -72,7 +72,7 @@ const InvoiceEdit = ({ invoice, isOpen, handleClose, onClose}) => {
             {...register("status")}
             type="text"
             id="status"
-            className="block m-auto p-4 border w-[220px] h-[25px] text-red-800 border-gray-300 rounded-lg text-center"
+            className="block m-auto p-4 border w-[220px] h-[25px] text-black border-gray-300 rounded-lg text-center"
           />
         </div>
 

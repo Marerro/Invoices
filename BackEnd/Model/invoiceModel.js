@@ -5,7 +5,7 @@ exports.postNewInvoice = async (user) => {
         const formatedDate = currentDate.toISOString().split('T')[0]
         console.log(formatedDate);
         const users = await sql`
-        INSERT INTO users (name, price, status, date, customId) 
+        INSERT INTO invoices (name, price, status, date, customId) 
         VALUES(${user.name}, ${user.price}, ${user.status || "draft"}, ${formatedDate}, ${user.customId})
         RETURNING *
         `;
@@ -16,7 +16,7 @@ exports.postNewInvoice = async (user) => {
 exports.getInvoicesCount = async () => {
     const invoices = await sql`
     SELECT COUNT(*)
-    FROM users
+    FROM invoices
     `
     return invoices
 
@@ -25,7 +25,7 @@ exports.getInvoicesCount = async () => {
 exports.getAllInvoices = async () => {
     const invoices =  await sql`
     SELECT id, name, price, date, status, customId 
-    FROM users
+    FROM invoices
     `;
 
     return invoices;
@@ -33,7 +33,7 @@ exports.getAllInvoices = async () => {
 
 exports.EditUser = async (updInvoice, id) => {
     const editInvoice = await sql`
-    UPDATE users
+    UPDATE invoices
     SET name = ${updInvoice.name}, price = ${updInvoice.price}, status = ${updInvoice.status}
     WHERE id = ${id}
     RETURNING *;
@@ -45,7 +45,7 @@ exports.EditUser = async (updInvoice, id) => {
 exports.deleteUser = async (id) => {
     const deletedInvoice = await sql`
     DELETE
-    FROM users
+    FROM invoices
     WHERE id = ${id}
     `
 

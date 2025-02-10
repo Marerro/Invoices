@@ -45,7 +45,7 @@ function Login() {
           type="text"
           id="username"
           placeholder="Username"
-          className="block m-auto p-4 border w-[220px] h-[25px] text-red-800 border-gray-300 rounded-lg text-center"
+          className="block m-auto p-4 border w-[220px] h-[25px] text-black border-gray-300 rounded-lg text-center"
         />
 
         {/* Email */}
@@ -59,7 +59,7 @@ function Login() {
           type="text"
           id="email"
           placeholder="Email"
-          className="block m-auto p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
+          className="block m-auto text-black p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
         />
 
         {/* Password */}
@@ -73,7 +73,7 @@ function Login() {
           type="password" 
           id="password"
           placeholder="Password"
-          className="block m-auto p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
+          className="block m-auto text-black p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
         />
 
         {/* Submit Button */}

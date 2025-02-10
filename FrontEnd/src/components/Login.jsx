@@ -57,14 +57,14 @@ function Login() {
           type="text"
           id="email"
           placeholder="Email"
-          className="block m-auto p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
+          className="text-black block m-auto p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
         />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
         {/* Password */}
         <label
           htmlFor="password"
-          className="block text-[25px] font-[500] text-white text-center"
+          className="block  text-[25px] font-[500] text-black text-center"
         >
         </label>
         <input
@@ -72,7 +72,7 @@ function Login() {
           type="password" 
           id="password"
           placeholder="Password"
-          className="block m-auto p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
+          className="block m-auto text-black p-4 border w-[220px] h-[25px] border-gray-300 rounded-lg text-center"
         />
         {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 

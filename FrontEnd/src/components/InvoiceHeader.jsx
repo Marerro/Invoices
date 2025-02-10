@@ -13,6 +13,7 @@ const InvoiceHeader = ({ handleStatus, onNewInvoice }) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const { user, loading } = useContext(UserContext); 
 
+
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
@@ -48,13 +49,13 @@ console.log(user);
       {/* Invoice Header */}
       <div className="header w-1/2 m-auto mt-3 flex pb-[60px]">
         <div>
-          <h1 className="text-white inconsolata text-[40px]">Invoices</h1>
-          <p className="text-white fira">There are {invoices} total invoices</p>
+          <h1 className="text-current inconsolata text-[40px]">Invoices</h1>
+          <p className="text-current fira">There are {invoices} total invoices</p>
         </div>
 
         {/* Filter by status */}
         <div className="ml-auto flex items-center">
-          <h4 className="text-white">Filter by status </h4>
+          <h4 className="text-current">Filter by status </h4>
 
           {/* Button for dropdown */}
           <button

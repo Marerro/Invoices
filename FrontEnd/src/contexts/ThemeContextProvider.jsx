@@ -10,7 +10,7 @@ const ThemeContextProvider = ({ children }) => {
   useEffect(() => {
     if (myTheme) {
       document.documentElement.className = myTheme; // document.documentElement: This refers to the root element of the document, which is usually the <html> tag in an HTML document.
-      document.body.className = myTheme === "dark" ? "#141625;" : "bg-neutral-500 text-black";
+      document.body.className = myTheme === "dark" ? "#141625 text-white" : "bg-[#FAF3E0] text-[#1E2139]";
     }
   }, [myTheme]);
 
