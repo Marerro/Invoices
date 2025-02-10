@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
 import { postUser } from "../helpers/post";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import {Link} from "react-router"
 
 function Login() {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
       const response = await postUser(data);
       console.log(response);
+      if (response) {
+        navigate("/login");
+      } else {
+        console.log("Registration failed");
+      }
       return response.data;
     } catch (error) {
       console.log(error);
@@ -71,14 +78,12 @@ function Login() {
 
         {/* Submit Button */}
         <div className="flex justify-center pt-8 pb-5">
-          <Link to="/">
           <button
             type="submit"
             className="w-[220px] h-[35px] text-gray-900 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-[#F7BE38]/90 focus:ring-1 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-sm text-center dark:focus:ring-[#F7BE38]/50"
           >
             Register
           </button>
-          </Link>
         </div>
         <p className="text-white text-center text-[19px] font-[200]">Already have account? <Link to="/login"> <span className="text-center text-blue-300 font-[200] text-[16px]"> Log in now </span></Link></p>
         </div>

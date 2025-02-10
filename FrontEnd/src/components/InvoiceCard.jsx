@@ -19,7 +19,7 @@ const InvoiceCard = ({ selectedDropDown }) => {
     try {
       const response = await allInvoices();
       setInvoices(response.data);
-      console.log(response.data);
+      console.log("invoice data:", response.data);
       setFilteredInvoices(response.data);
     } catch (error) {
       console.log(error);
@@ -75,9 +75,9 @@ const InvoiceCard = ({ selectedDropDown }) => {
         >
           <div className="grid grid-cols-6 justify-items-center bg-[#1E2139] shadow-md items-center w-2/4 justify-center rounded-[7px] h-[70px]">
             <h1>
-              #<span className="fira">{customid}</span>
+              #<span className="fira text-gray-400">{customid}</span>
             </h1>
-            <h3 className="text-gray-300 fira text-[14px]"> Due {data}</h3>
+            <h3 className="text-gray-400 fira text-[14px]"> <span className="text-white">Due</span> {data}</h3>
             <h3 className="text-gray-300 fira">{name}</h3>
             <h1 className="text-[25px]">${price}</h1>
             <div

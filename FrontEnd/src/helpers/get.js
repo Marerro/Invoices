@@ -1,20 +1,17 @@
 import axios from "axios";
 
-// WILL FIX IT LATER.
-// const url = import.meta.env.INVOICES_API
-const authAPI = import.meta.env.USERS_API
+const authAPI = import.meta.env.VITE_USERS_API
+const INVOICES_API = import.meta.env.VITE_INVOICES_API;
 
-const url = "http://localhost:3002/api/v1/invoices";
-const url2 = "http://localhost:3002/api/v1/invoices/all";
 // Count of Invoices
 export const countofInvoices = async () => {
-    const response = await axios.get(url);
+    const response = await axios.get(INVOICES_API);
 
     return response.data;
 }
 
 export const allInvoices = async () => {
-    const response = await axios.get(url2);
+    const response = await axios.get(`${INVOICES_API}/all`);
 
     return response.data;
 }

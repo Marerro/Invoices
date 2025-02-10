@@ -1,8 +1,9 @@
 import axios from "axios"
 
-const url = "http://localhost:3002/api/v1/invoices/update"
+const INVOICES_API = import.meta.env.VITE_INVOICES_API;
+
 export const EditUser = async (id, data) => {
 
-    const response = await axios.patch(`${url}/${id}`, data)
+    const response = await axios.patch(`${INVOICES_API}/update/${id}`, data)
     return response.data;
 }
