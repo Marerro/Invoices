@@ -7,6 +7,7 @@ const registerRouter = router();
 
 registerRouter.post('/', validateNewUser,validate,  authController.signUp);
 registerRouter.post('/login',validateLogin, validate, authController.login);
+registerRouter.get('/logout',authController.protect, authController.logout);    
 registerRouter.get('/me', authController.protect, authController.getAuthenticatedUser);
 
 module.exports = registerRouter;

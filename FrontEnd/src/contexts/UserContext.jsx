@@ -16,6 +16,7 @@ export const UserContextProvider = ({ children }) => {
                     withCredentials: true
                 });
                 setUser(response.data.data);
+                localStorage.setItem("user", JSON.stringify(response.data.data));
             } catch (error) {
 
                 setUser(null);

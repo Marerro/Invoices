@@ -4,7 +4,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 
 // endpoint
-const userRouter = require('./Router/userRouter');
+const invoicesRouter = require('./Router/invoiceRouter');
 const registerRouter = require('./Router/registerRouter');
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(cors({
 app.use(cookieParser());
 
 app.use("/api/v1/auth", registerRouter);
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/invoices", invoicesRouter);
 
 app.use(errorHandler);
 

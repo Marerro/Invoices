@@ -1,9 +1,21 @@
-const {postUser, getInvoicesCount, getAllInvoices, EditUser, deleteUser} = require('../Model/userModel');
+const {postNewInvoice, getInvoicesCount, getAllInvoices, EditUser, deleteUser} = require('../Model/invoiceModel');
+const {customAlphabet} = require('nanoid');
 
-class userController {
-    async postUser(req, res, next) {
+class InvoicesController {
+
+    generateCustomId() { 
+        const letters = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 2);
+        const numbers = customAlphabet("0123456789", 4);
+
+        return `${letters()}${numbers()}`;
+    }
+
+    async postInvoice(req, res, next) {
         try {
 
+            const customId = this.generateCustomId();
+
+            console.log(customId);
             
             const {name, price, status, date} = req.body
 
@@ -15,13 +27,10 @@ class userController {
                 date: formattedDate,
                 price,
                 status: status || 'Draft',
+                customId: customId
             };
             
-
-            const user = await postUser(userBody);
-            
-            console.log(user);
-            
+            const user = await postNewInvoice(userBody);             
 
             res.status(200).json({
                 status: "success",
@@ -94,4 +103,4 @@ class userController {
 
 }
 
-module.exports = new userController();
+module.exports = new InvoicesController();

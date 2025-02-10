@@ -19,6 +19,7 @@ const InvoiceCard = ({ selectedDropDown }) => {
     try {
       const response = await allInvoices();
       setInvoices(response.data);
+      console.log(response.data);
       setFilteredInvoices(response.data);
     } catch (error) {
       console.log(error);
@@ -33,7 +34,6 @@ const InvoiceCard = ({ selectedDropDown }) => {
     try {
       const response = await deleteInvoice(id);
       setDeleteSelected(response);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +64,7 @@ const InvoiceCard = ({ selectedDropDown }) => {
 
   const renderInvoice = (invoices) => {
     return invoices.map((invoice) => {
-      const { id, name, price, date, status } = invoice;
+      const { id, name, price, date, status, customid } = invoice;
 
       const data = date.slice(0, 10);
 
@@ -75,7 +75,7 @@ const InvoiceCard = ({ selectedDropDown }) => {
         >
           <div className="grid grid-cols-6 justify-items-center bg-[#1E2139] shadow-md items-center w-2/4 justify-center rounded-[7px] h-[70px]">
             <h1>
-              #<span className="fira">{id}</span>
+              #<span className="fira">{customid}</span>
             </h1>
             <h3 className="text-gray-300 fira text-[14px]"> Due {data}</h3>
             <h3 className="text-gray-300 fira">{name}</h3>

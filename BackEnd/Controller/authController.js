@@ -126,7 +126,12 @@ class authController {
         next(error);
       }
     };
-  };
 
+    logout = async (req, res) => {
+        return res.clearCookie("jwt").status(200).json({
+          message: "You are logged out",
+        })
+  };
+}
 
 module.exports = new authController();

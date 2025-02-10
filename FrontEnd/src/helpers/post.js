@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const url = "http://localhost:3002/api/v1/users";
+const url = "http://localhost:3002/api/v1/invoices";
 
 const url1 = "http://localhost:3002/api/v1/auth"
 const getUserURL = "http://localhost:3002/api/v1/auth/login"
